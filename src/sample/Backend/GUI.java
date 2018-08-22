@@ -2,7 +2,6 @@ package sample.Backend;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.scene.Camera;
 import javafx.scene.Group;
 import javafx.scene.ParallelCamera;
 import javafx.scene.Scene;
@@ -51,8 +50,10 @@ public class GUI extends Application {
             @Override
             public void handle(long frameTime) {
                 if (frameTime - lastUpdate >= (50_000_000)) {
-                    //System.out.println("Running");
-                    GUIRobot.updateRobot((int) 1000, (int) 200, 90);
+                    /*Server.updateXYRot();
+                    GUIRobot.updateRobot((int) Server.getX(), (int) Server.getY(), (int) Server.getRot());*/
+                		GUIRobot.updateRobot(5, (int) 5, (int) 90);
+                		
                     counter++;
 
 
