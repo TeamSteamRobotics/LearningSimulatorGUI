@@ -10,13 +10,18 @@ import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
-
+/**
+ * Creates and manages the driver station window that is started along side the robot simulation. Is used to disable/enable
+ * the robot at any time. Also contains diagnostics information, network information, and robot information.
+ */
 public class DriverStation {
+    // The root node that every group is added to: to be drawn
     public static Group driverStationRoot = new Group();
 
-
+    // The scene that the driver station sets its window to
     public static Scene driverStationScene = new Scene(driverStationRoot, 500, 200, Color.BLACK);
 
+    // The groups of buttons that all represent different tabs within the driver station
     static Group menuSelectionGroup = new Group();
     static Group operationModeGroup = new Group();
     static Group diagnosticsModeGroup = new Group();
@@ -24,8 +29,11 @@ public class DriverStation {
     static Group usbDeviceModeGroup = new Group();
     static Group powerModeGroup = new Group();
 
-
-
+    /**
+     * Creates the driver station window and all the buttons within. Menu changes and updates are handled by EventHandlers
+     * on buttons that change menus. Each group of buttons contains the button nodes themselves, the toggle group that
+     * they are all apart of (to only allow the selection of one button at a time), and any needed EventHandlers.
+     */
     public static void launch() {
         Stage driverStationWindow = new Stage();
         driverStationWindow.setTitle("Driver Station 1.0");
@@ -34,7 +42,7 @@ public class DriverStation {
 
 
         //MENU SELECTION BUTTONS
-            ToggleGroup driverStationMenus = new ToggleGroup();
+        ToggleGroup driverStationMenus = new ToggleGroup();
             ToggleButton operationModeButton = new ToggleButton("O");
             operationModeButton.setLayoutY(25);
             operationModeButton.setToggleGroup(driverStationMenus);
@@ -168,6 +176,11 @@ public class DriverStation {
 
     }
 
+    /**
+     * Handles the switching of the button groups. Clears the old group and adds the new one in it's place.Called mostly
+     * from button EventHandlers.
+     * @param newGroup The new group for the root node to display.
+     */
     private static void replaceGroup(Group newGroup) {
         driverStationRoot.getChildren().clear();
         driverStationRoot.getChildren().addAll(menuSelectionGroup, newGroup);

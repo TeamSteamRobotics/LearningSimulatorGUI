@@ -6,10 +6,14 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+/**
+ * Handles the connect to and handling of the server (LearningSimulator). Expects the server to be running before the
+ * GUI is ran. Parses input and outputs it to the main loop.
+ */
 public class Server {
 	
 	//Variables for connecting to the server
-	Socket client;
+	static Socket client;
     static PrintWriter out;
     static BufferedReader in;
     
@@ -22,7 +26,7 @@ public class Server {
     /**
      * Tries to connect to the LearningSimulator server, then sets up the input and output streams.
      */
-    public void setup() {
+    public static void setup() {
         try {
             client = new Socket("localhost", 3333);
             out = new PrintWriter(client.getOutputStream(), true);
@@ -43,7 +47,7 @@ public class Server {
                 x = Double.parseDouble(values[0]);
                 y = Double.parseDouble(values[1]);
                 rot = Double.parseDouble(values[2]);
-                System.out.println("X: " + x + "Y: " + y + "Rot: " + rot);
+                System.out.println("X: " + x + " Y: " + y + " Rot: " + rot);
             }
 	    } 
 	    	catch (IOException ex) {
