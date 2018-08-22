@@ -2,10 +2,10 @@ package sample.Backend;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.event.EventHandler;
+import javafx.scene.Camera;
 import javafx.scene.Group;
+import javafx.scene.ParallelCamera;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -16,10 +16,9 @@ public class GUI extends Application {
     private static String simState = "Disabled";
     private static AnimationTimer simLoop;
 
-    public static Scene currentScene = new Scene(root, 1000, 800, Color.BEIGE);
+    private static ParallelCamera sceneCamera;
 
-    double x;
-    double y;
+    public static Scene currentScene = new Scene(root, 1000, 800, Color.BEIGE);
 
     @Override
     public void start(Stage primaryStage) {
@@ -27,6 +26,8 @@ public class GUI extends Application {
         primaryStage.setScene(currentScene);
         //primaryStage.setFullScreen(true);
         primaryStage.show();
+
+        currentScene.setCamera(sceneCamera);
 
         DriverStation.launch();
 
@@ -42,13 +43,6 @@ public class GUI extends Application {
     private int counter;
     private void simLoop() {
 
-
-        currentScene.setOnMouseMoved(new EventHandler<MouseEvent>() {
-            @Override public void handle(MouseEvent event) {
-                x = event.getSceneX();
-                y = event.getSceneY();
-            }
-        });
         //Timer runs constantly
 
         simLoop = new AnimationTimer() {
@@ -58,7 +52,7 @@ public class GUI extends Application {
             public void handle(long frameTime) {
                 if (frameTime - lastUpdate >= (50_000_000)) {
                     //System.out.println("Running");
-                    GUIRobot.updateRobot((int) x, (int) y, 90);
+                    GUIRobot.updateRobot((int) 1000, (int) 200, 90);
                     counter++;
 
 
