@@ -53,7 +53,8 @@ public class GUI extends Application {
     private void simInit() {
         GUIRobot.createRobot();
         Environment.createEnviornment();
-        Server.setup();
+        Server.tryConnect();
+        Input.userInputInit();
     }
 
     /**
@@ -69,10 +70,19 @@ public class GUI extends Application {
             @Override
             public void handle(long frameTime) {
                 if (frameTime - lastUpdate >= (50_000_000)) {
-                    Server.updateXYRot();
-                    GUIRobot.updateRobot(Server.getX(), Server.getY(), Server.getRot());
+                    if (Server.connected) {
 
-                    updateCamera();
+                        Server.updateXYRot();
+                        GUIRobot.updateRobot(Server.getX(), Server.getY(), Server.getRot());
+                        Server.sendRobotState(Input.getLeftWheelDirection(), Input.getRightWheelDirection(), DriverStation.robotState);
+
+                        updateCamera();
+                        System.out.println(DriverStation.robotState);
+                    }
+                    else {
+                        Server.tryConnect();
+                    }
+
 
                     lastUpdate = frameTime;
                 }

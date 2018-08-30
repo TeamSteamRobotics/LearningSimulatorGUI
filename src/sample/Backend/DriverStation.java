@@ -7,27 +7,28 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-
 /**
  * Creates and manages the driver station window that is started along side the robot simulation. Is used to disable/enable
  * the robot at any time. Also contains diagnostics information, network information, and robot information.
  */
-public class DriverStation {
+class DriverStation {
+
+    //The state that the robot is in. Either teleOp, autonomous, or disabled
+    static String robotState = "teleOp";
+
     // The root node that every group is added to: to be drawn
-    public static Group driverStationRoot = new Group();
+    private static Group driverStationRoot = new Group();
 
     // The scene that the driver station sets its window to
-    public static Scene driverStationScene = new Scene(driverStationRoot, 500, 200, Color.BLACK);
+    private static Scene driverStationScene = new Scene(driverStationRoot, 500, 200, Color.BLACK);
 
     // The groups of buttons that all represent different tabs within the driver station
-    static Group menuSelectionGroup = new Group();
-    static Group operationModeGroup = new Group();
-    static Group diagnosticsModeGroup = new Group();
-    static Group setupModeGroup = new Group();
-    static Group usbDeviceModeGroup = new Group();
-    static Group powerModeGroup = new Group();
+    private static Group menuSelectionGroup = new Group();
+    private static Group operationModeGroup = new Group();
+    private static Group diagnosticsModeGroup = new Group();
+    private static Group setupModeGroup = new Group();
+    private static Group usbDeviceModeGroup = new Group();
+    private static Group powerModeGroup = new Group();
 
     /**
      * Creates the driver station window and all the buttons within. Menu changes and updates are handled by EventHandlers
@@ -47,60 +48,45 @@ public class DriverStation {
             operationModeButton.setLayoutY(25);
             operationModeButton.setToggleGroup(driverStationMenus);
 
-            operationModeButton.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    if (driverStationRoot.getChildren().get(1) != operationModeGroup)
-                        replaceGroup(operationModeGroup);
-                }
+            operationModeButton.setOnAction(event -> {
+                if (driverStationRoot.getChildren().get(1) != operationModeGroup)
+                    replaceGroup(operationModeGroup);
             });
 
             ToggleButton diagnosticsModeButton = new ToggleButton("D");
             diagnosticsModeButton.setLayoutY(50);
             diagnosticsModeButton.setToggleGroup(driverStationMenus);
 
-            diagnosticsModeButton.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    if (driverStationRoot.getChildren().get(1) != diagnosticsModeGroup)
-                        replaceGroup(diagnosticsModeGroup);
-                }
+            diagnosticsModeButton.setOnAction(event -> {
+                if (driverStationRoot.getChildren().get(1) != diagnosticsModeGroup)
+                    replaceGroup(diagnosticsModeGroup);
             });
 
             ToggleButton setupModeButton = new ToggleButton("S");
             setupModeButton.setLayoutY(75);
             setupModeButton.setToggleGroup(driverStationMenus);
 
-            setupModeButton.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    if (driverStationRoot.getChildren().get(1) != setupModeGroup)
-                        replaceGroup(setupModeGroup);
-                }
+            setupModeButton.setOnAction(event -> {
+                if (driverStationRoot.getChildren().get(1) != setupModeGroup)
+                    replaceGroup(setupModeGroup);
             });
 
             ToggleButton usbDevicesModeButton = new ToggleButton("U");
             usbDevicesModeButton.setLayoutY(100);
             usbDevicesModeButton.setToggleGroup(driverStationMenus);
 
-            usbDevicesModeButton.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    if (driverStationRoot.getChildren().get(1) != usbDeviceModeGroup)
-                        replaceGroup(usbDeviceModeGroup);
-                }
+            usbDevicesModeButton.setOnAction(event -> {
+                if (driverStationRoot.getChildren().get(1) != usbDeviceModeGroup)
+                    replaceGroup(usbDeviceModeGroup);
             });
 
             ToggleButton powerModeButton = new ToggleButton("P");
             powerModeButton.setLayoutY(125);
             powerModeButton.setToggleGroup(driverStationMenus);
 
-            powerModeButton.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    if (driverStationRoot.getChildren().get(1) != powerModeGroup)
-                        replaceGroup(powerModeGroup);
-                }
+            powerModeButton.setOnAction(event -> {
+                if (driverStationRoot.getChildren().get(1) != powerModeGroup)
+                    replaceGroup(powerModeGroup);
             });
 
 
@@ -113,17 +99,27 @@ public class DriverStation {
             teleSelection.setLayoutX(50);
             teleSelection.setSelected(true);
 
+            teleSelection.setOnAction(event -> robotState = "teleOp");
+
             ToggleButton autonSelection = new ToggleButton("Autonomous");
             autonSelection.setLayoutX(150);
             autonSelection.setToggleGroup(robotModeSelection);
+
+            autonSelection.setOnAction(event -> robotState = "autonomous");
 
             ToggleButton practiceSelection = new ToggleButton("Practice");
             practiceSelection.setLayoutX(250);
             practiceSelection.setToggleGroup(robotModeSelection);
 
+        //TODO: Implement practice mode
+        practiceSelection.setOnAction(event -> robotState = "teleOp");
+
             ToggleButton testSelection = new ToggleButton("Test");
             testSelection.setLayoutX(350);
             testSelection.setToggleGroup(robotModeSelection);
+
+        //TODO: Implement test mode
+        testSelection.setOnAction(event -> robotState = "teleOp");
 
         //ENABLE/DISABLE BUTTONS
         ToggleGroup robotEnableSelection = new ToggleGroup();
@@ -144,27 +140,21 @@ public class DriverStation {
             enableButton.setMinHeight(100);
             enableButton.setMaxHeight(100);
 
-            enableButton.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    if (enableButton.isSelected())
-                        GUI.enable();
-                    else {
-                        disableButton.setSelected(true);
-                        GUI.disable();
-                    }
+            enableButton.setOnAction(event -> {
+                if (enableButton.isSelected())
+                    GUI.enable();
+                else {
+                    disableButton.setSelected(true);
+                    GUI.disable();
                 }
             });
 
-            disableButton.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    if (disableButton.isSelected())
-                        GUI.disable();
-                    else {
-                        enableButton.setSelected(true);
-                        GUI.enable();
-                    }
+            disableButton.setOnAction(event -> {
+                if (disableButton.isSelected())
+                    GUI.disable();
+                else {
+                    enableButton.setSelected(true);
+                    GUI.enable();
                 }
             });
 
