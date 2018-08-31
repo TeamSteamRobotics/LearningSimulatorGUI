@@ -14,7 +14,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="guiTake2" options="--add-modules=javafx.fxml,javafx.graphics,javafx.controls,javafx.base" />
+      <module name="guiTake2" options="" />
     </option>
   </component>
 </project>
