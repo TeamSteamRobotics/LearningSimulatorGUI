@@ -74,7 +74,7 @@ public class GUI extends Application {
 
                         Server.updateXYRot();
                         GUIRobot.updateRobot(Server.getX(), Server.getY(), Server.getRot());
-                        Server.sendRobotState(Input.getLeftWheelDirection(), Input.getRightWheelDirection(), DriverStation.robotState);
+                        Server.sendRobotState(Input.getJoystickX(), Input.getJoystickY(), DriverStation.robotState);
 
                         updateCamera();
                         System.out.println(DriverStation.robotState);

@@ -5,15 +5,15 @@ import javafx.scene.input.KeyEvent;
 
 class Input {
 
-    private static int leftWheelDirection = 0;
-    private static int rightWheelDirection = 0;
+    private static int joystickX = 0;
+    private static int joystickY = 0;
 
-    static int getLeftWheelDirection() {
-        return leftWheelDirection;
+    static int getJoystickX() {
+        return joystickX;
     }
 
-    static int getRightWheelDirection() {
-        return rightWheelDirection;
+    static int getJoystickY() {
+        return joystickY;
     }
 
     public static void userInputInit() {
@@ -22,20 +22,20 @@ class Input {
             switch (keyPressed) {
                 //WASD controls
                 case W:
-                    leftWheelDirection = 1;
-                    rightWheelDirection = 1;
+                    joystickX = 0;
+                    joystickY = 1;
                     break;
                 case A:
-                    leftWheelDirection = -1;
-                    rightWheelDirection = 1;
+                    joystickX = -1;
+                    joystickY = 0;
                     break;
                 case S:
-                    leftWheelDirection = -1;
-                    rightWheelDirection = -1;
+                    joystickX = 0;
+                    joystickY = -1;
                     break;
                 case D:
-                    leftWheelDirection = 1;
-                    rightWheelDirection = -1;
+                    joystickX = 1;
+                    joystickY = 0;
                     break;
             }
         });

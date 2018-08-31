@@ -64,8 +64,8 @@ public class Server {
 	    	}
     }
 
-    public static void sendRobotState(int leftWheelDirection, int rightWheelDirection, String robotState) {
-        out.println(leftWheelDirection + "," + rightWheelDirection + "," + robotState );
+    public static void sendRobotState(int joystickX, int joystickY, String robotState) {
+        out.println(joystickX + "," + joystickY + "," + robotState );
     }
 
     /**
